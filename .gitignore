@@ -1,0 +1,14 @@
+# 音声データ（データセットのフォルダやWAVファイルをリモートに上げない）
+*.wav
+*.mp3
+**/tracks/
+**/dev1/
+
+# Mac特有の隠しファイル
+.DS_Store
+
+# Python環境のキャッシュなど
+__pycache__/
+*.pyc
+.venv/
+.ipynb_checkpoints/
