@@ -16,3 +16,8 @@ uv sync
 ```
 uv run online-dsp
 ```
+# フォルダ構成
+* src
+    * io.py
+    * main.py
+    * processor.py
