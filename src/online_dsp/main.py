@@ -5,11 +5,11 @@ from .io import audio_in, audio_out
 from .processor import frame_processing
 
 
-def run_stream():
+def main():
     # 1. 変数定義
     frlen = 1024  # フレーム長
     frsft = 256  # フレームシフト
-    ch = 2  # チャンネル数
+    ch = 1  # チャンネル数
 
     # 2. 各種バッファ・配列の初期化
     buf0 = np.zeros((frlen, ch))
@@ -73,4 +73,4 @@ def run_stream():
 
 
 if __name__ == "__main__":
-    run_stream()
+    main()
