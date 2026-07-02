@@ -37,6 +37,8 @@ def main():
     plt.ion()
     plt.figure()
 
+    print("\n中止する場合は Ctrl+C を押してください。\n")
+
     # 4. メインループ
     while True:
         try:
@@ -54,8 +56,12 @@ def main():
             for h in range(ch):
                 frm_sig0[:, h] = buf0[:, h] * wnd_a
 
+            """
             # ④ フレーム毎の信号処理
             frm_sig1, param = frame_processing(frm_sig0, param)
+            """
+            # processor.pyを修正したので受け取りも3つに増やす
+            frm_sig1, param, spec = frame_processing(frm_sig0, param)
 
             # ⑤ 合成窓をかける
             for h in range(ch):
@@ -63,9 +69,13 @@ def main():
 
             # ⑥ オーバーラップ加算
             buf1 = buf1 + frm_sig1
+            
 
-            # ⑦ 確定したフレームシフト分のデータをオーディオ出力に転送
+            """# ⑦ 確定したフレームシフト分のデータをオーディオ出力に転送
             audio_out(buf1[0:frsft, :])
+            """
+            # ⑦ スペクトルを渡して出力
+            audio_out(buf1[0:frsft, :], spec=spec)
 
         except KeyboardInterrupt:
             print("\n処理を停止しました。")

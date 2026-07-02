@@ -9,6 +9,9 @@ _ax = None
 # キューを使ってデータを蓄積する
 input_queue = []
 
+# スペクトログラム用のバッファ（時間軸×周波数軸）
+_spec_buffer = np.zeros((256, 512)) # 256フレーム分蓄積
+
 def callback(indata, frames, time, status):
     if status:
         print(status)
@@ -38,10 +41,10 @@ def audio_in(len_samples, channels):
         
         # データが足りなければ少し待つ
         sd.sleep(10)
-
+    """
 def audio_out(sig):
-    """チラつきを抑えた描画関数"""
-    global _line, _fig, _ax
+    #チラつきを抑えた描画関数
+    #    global _line, _fig, _ax
     
     # 初回のみ図を作成
     if _fig is None:
@@ -57,4 +60,18 @@ def audio_out(sig):
     
     # 描画を更新
     plt.draw()
+    plt.pause(0.001)
+    """
+
+def audio_out(sig, spec=None):
+    global _spec_buffer
+    
+    if spec is not None:
+        # 新しいスペクトルをバッファに追加（右に詰め、古いものを左に送る）
+        _spec_buffer = np.roll(_spec_buffer, -1, axis=0)
+        _spec_buffer[-1, :] = spec
+
+    plt.clf()
+    # スペクトログラムを描画
+    plt.imshow(_spec_buffer[:,:200].T, aspect='auto', origin='lower', cmap='magma')
     plt.pause(0.001)
