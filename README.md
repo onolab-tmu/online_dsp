@@ -3,7 +3,7 @@
 ## 実行手順
 1. リポジトリをクローンしてフォルダに入る
 ```
-git clone https://github.com/fujii-yjc/online_dsp.git
+git clone https://github.com/onolab-tmu/online_dsp.git
 cd online_dsp
 ```
 
